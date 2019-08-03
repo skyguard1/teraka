@@ -1,1 +1,1 @@
-A microservice registry
+A service registry
