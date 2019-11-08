@@ -104,7 +104,7 @@ public class TerakaServerInvoker {
             if(StringUtils.isNotEmpty(requestEntity.getTopic())){
                 topic = requestEntity.getTopic();
             }
-            if (requestEntity.getRequestType() == RequestType.PRODUCER.getCode()) {
+            if (requestEntity.getRequestType() == RequestType.PRODUCER.getCode()||requestEntity.getRequestType()==RequestType.NODE.getCode()) {
                 registry.registerProducer(topic, serviceConfig);
             } else if (requestEntity.getRequestType() == RequestType.CONSUMER.getCode()) {
                 registry.registerConsumer(topic, serviceConfig);
