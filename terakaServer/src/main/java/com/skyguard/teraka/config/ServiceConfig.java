@@ -1,5 +1,7 @@
 package com.skyguard.teraka.config;
 
+import java.util.Objects;
+
 public class ServiceConfig {
 
     private int type;
@@ -37,5 +39,19 @@ public class ServiceConfig {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ServiceConfig that = (ServiceConfig) o;
+        return port == that.port &&
+               ip.equals(that.ip);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ip, port);
     }
 }
