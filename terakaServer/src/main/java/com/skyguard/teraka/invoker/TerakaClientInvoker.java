@@ -14,13 +14,13 @@ import com.skyguard.teraka.loadbalance.BaseRule;
 import com.skyguard.teraka.loadbalance.IRule;
 import com.skyguard.teraka.scheduler.RequestCacheTask;
 import com.skyguard.teraka.util.ClassUtil;
+import com.skyguard.teraka.util.IpUtil;
 import com.skyguard.teraka.util.JsonUtil;
 import com.skyguard.teraka.util.PropertyUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.InetAddress;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -117,13 +117,13 @@ public class TerakaClientInvoker {
         try {
             if(isTerakaClient()) {
                 if(type!=0) {
-                    InetAddress inetAddress = InetAddress.getLocalHost();
+                    String ip = IpUtil.getLocalIpAddr();
                     int port = Integer.parseInt(PropertyUtil.getValue("teraka.client.port"));
                     RequestEntity requestEntity = new RequestEntity();
                     requestEntity.setRequestType(type);
                     ServiceConfig serviceConfig = new ServiceConfig();
                     serviceConfig.setType(type);
-                    serviceConfig.setIp(inetAddress.getHostAddress());
+                    serviceConfig.setIp(ip);
                     serviceConfig.setPort(port);
                     serviceConfig.setWeight(weight);
                     requestEntity.setServiceConfig(serviceConfig);
