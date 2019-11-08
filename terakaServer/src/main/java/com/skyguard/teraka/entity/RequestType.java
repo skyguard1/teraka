@@ -2,7 +2,7 @@ package com.skyguard.teraka.entity;
 
 public enum  RequestType {
 
-    PRODUCER(1,"生产者"),CONSUMER(2,"消费者")
+    PRODUCER(1,"生产者"),CONSUMER(2,"消费者"),NODE(3,"节点信息")
 
 
     ;

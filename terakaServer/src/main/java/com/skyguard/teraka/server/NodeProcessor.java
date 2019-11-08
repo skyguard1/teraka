@@ -42,7 +42,11 @@ public class NodeProcessor {
         List<Node> nodes = ServerNodes.getServerNodes();
         List<Node> serverNodes = Lists.newArrayList();
         for(Node node:nodes){
-            if((node.getIp().equals("localhost")||!node.getIp().equals(ip))||node.getPort()!=port){
+            if(node.getIp().equals("localhost")){
+                if(node.getPort()!=port) {
+                    serverNodes.add(node);
+                }
+            } else if(!node.getIp().equals(ip)&&node.getPort()!=port){
                 serverNodes.add(node);
             }
         }

@@ -109,7 +109,9 @@ public class TerakaServerInvoker {
             } else if (requestEntity.getRequestType() == RequestType.CONSUMER.getCode()) {
                 registry.registerConsumer(topic, serviceConfig);
             }
-            replicaNodes(requestEntity);
+            if(requestEntity.getRequestType()!=RequestType.NODE.getCode()) {
+                replicaNodes(requestEntity);
+            }
         }else {
             LOG.info("is not teraka server");
         }
@@ -119,6 +121,8 @@ public class TerakaServerInvoker {
     private static void replicaNodes(RequestEntity requestEntity){
 
         List<Node> nodes = NodeProcessor.getServerNode();
+
+        requestEntity.setRequestType(RequestType.NODE.getCode());
 
         try {
             for (Node node : nodes) {
