@@ -20,6 +20,7 @@ public class TerakaServer {
 
         try {
             TerakaServerInvoker.start();
+            NodeProcessor.processNodes();
             LOG.info("terekaServer start success");
         }catch (Exception e){
             LOG.error("start server error",e);

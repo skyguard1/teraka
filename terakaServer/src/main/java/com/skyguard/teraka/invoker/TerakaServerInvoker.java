@@ -11,11 +11,15 @@ import com.skyguard.teraka.entity.RequestType;
 import com.skyguard.teraka.filter.BaseFilter;
 import com.skyguard.teraka.filter.Filter;
 import com.skyguard.teraka.handler.TerakaServerHandler;
+import com.skyguard.teraka.http.HttpClientUtil;
 import com.skyguard.teraka.loadbalance.BaseRule;
 import com.skyguard.teraka.loadbalance.IRule;
 import com.skyguard.teraka.registry.TerakaRegistry;
 import com.skyguard.teraka.scheduler.InstanceScheduler;
+import com.skyguard.teraka.server.Node;
+import com.skyguard.teraka.server.NodeProcessor;
 import com.skyguard.teraka.util.ClassUtil;
+import com.skyguard.teraka.util.JsonUtil;
 import com.skyguard.teraka.util.PropertyUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -105,8 +109,25 @@ public class TerakaServerInvoker {
             } else if (requestEntity.getRequestType() == RequestType.CONSUMER.getCode()) {
                 registry.registerConsumer(topic, serviceConfig);
             }
+            replicaNodes(requestEntity);
         }else {
             LOG.info("is not teraka server");
+        }
+
+    }
+
+    private static void replicaNodes(RequestEntity requestEntity){
+
+        List<Node> nodes = NodeProcessor.getServerNode();
+
+        try {
+            for (Node node : nodes) {
+                String url = "http://" + node.getIp() + ":" + node.getPort() + PropertyUtil.getValue("teraka.client.register.url");
+                String param = JsonUtil.toJsonString(requestEntity);
+                HttpClientUtil.postData(url, param);
+            }
+        }catch (Exception e){
+            LOG.error("get data error",e);
         }
 
     }
