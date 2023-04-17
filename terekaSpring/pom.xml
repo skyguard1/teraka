@@ -12,7 +12,7 @@
     <artifactId>tereka-spring</artifactId>
 
     <properties>
-        <spring.version>6.0.7</spring.version>
+        <spring.version>6.0.8</spring.version>
     </properties>
 
     <dependencies>
